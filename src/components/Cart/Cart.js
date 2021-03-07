@@ -12,7 +12,7 @@ const Cart = (props) => {
   let total = 0;
   for (let i = 0; i < cart.length; i++) {
     const item = cart[i];
-    total = total + item.price;
+    total = total + item.price * item.quantity;
   }
 
   let shipping = 0;
@@ -33,54 +33,56 @@ const Cart = (props) => {
         <h4>Items ordered: {cart.length}</h4>
       </div>
       <table>
-        <tr>
-          <td>
-            <small>Items:</small>
-          </td>
-          <td>
-            <small> {cart.length}</small>
-          </td>
-        </tr>
+        <tbody>
+          <tr>
+            <td>
+              <small>Items:</small>
+            </td>
+            <td>
+              <small> {cart.length}</small>
+            </td>
+          </tr>
 
-        <tr>
-          <td>
-            <small>Shipping & Handling:</small>
-          </td>
-          <td>
-            <small>${shipping}</small>
-          </td>
-        </tr>
+          <tr>
+            <td>
+              <small>Shipping & Handling:</small>
+            </td>
+            <td>
+              <small>${shipping}</small>
+            </td>
+          </tr>
 
-        <tr>
-          <td>
-            <small>Total before tax:</small>
-          </td>
-          <td>
-            <small>${priceFormat(total)}</small>
-          </td>
-        </tr>
+          <tr>
+            <td>
+              <small>Total before tax:</small>
+            </td>
+            <td>
+              <small>${priceFormat(total)}</small>
+            </td>
+          </tr>
 
-        <tr>
-          <td>
-            <small>Estimated Tax:</small>
-          </td>
-          <td>
-            <small>${priceFormat(tax)}</small>
-          </td>
-        </tr>
+          <tr>
+            <td>
+              <small>Estimated Tax:</small>
+            </td>
+            <td>
+              <small>${priceFormat(tax)}</small>
+            </td>
+          </tr>
+        </tbody>
 
-        <tr className="cart-total">
-          <td>
-            <small>Order Total:</small>
-          </td>
-          <td>
-            <small>${priceFormat(shipping + total + tax)}</small>
-          </td>
-        </tr>
+        <tfoot>
+          <tr className="cart-total">
+            <td>
+              <small>Order Total:</small>
+            </td>
+            <td>
+              <small>${priceFormat(shipping + total + tax)}</small>
+            </td>
+          </tr>
+        </tfoot>
       </table>
-      <div style={{ textAlign: "center" }}>
-        <button className="button">Review your order</button>
-      </div>
+      <div style={{ textAlign: "center" }}>{props.children}</div>
     </div>
   );
 };

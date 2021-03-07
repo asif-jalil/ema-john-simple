@@ -17,6 +17,7 @@ table {
   width: 220px;
   text-align: center;
   cursor: pointer;
+  color: #000;
 }
 
 .cart-total {

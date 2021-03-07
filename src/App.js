@@ -1,17 +1,39 @@
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import "./assets/FontAwesome/FontAwesome";
 import "./App.css";
 import Header from "./components/Header/Header";
 import Shop from "./components/Shop/Shop";
-import { library } from "@fortawesome/fontawesome-svg-core";
-import { fas } from "@fortawesome/free-solid-svg-icons";
-import { far } from "@fortawesome/free-regular-svg-icons";
-import { fab } from "@fortawesome/free-brands-svg-icons";
-library.add(fas, far, fab);
+import Inventory from "./components/Inventory/Inventory";
+import Review from "./components/Review/Review";
+import NotFound from "./components/NotFound/NotFound";
+import ProductDetail from "./components/ProductDetail/ProductDetail";
 
 function App() {
   return (
     <div>
-      <Header></Header>
-      <Shop></Shop>
+      <Router>
+        <Header></Header>
+        <Switch>
+          <Route path="/shop">
+            <Shop></Shop>
+          </Route>
+          <Route path="/review">
+            <Review></Review>
+          </Route>
+          <Route path="/inventory">
+            <Inventory></Inventory>
+          </Route>
+          <Route exact path="/">
+            <Shop></Shop>
+          </Route>
+          <Route path="/product/:productKey">
+            <ProductDetail></ProductDetail>
+          </Route>
+          <Route path="*">
+            <NotFound></NotFound>
+          </Route>
+        </Switch>
+      </Router>
     </div>
   );
 }

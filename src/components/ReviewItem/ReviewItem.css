@@ -1,0 +1,13 @@
+.shipping-info h4 {
+  margin-bottom: 10px;
+}
+
+.shipping-option label {
+  color: #090;
+  font-weight: bold;
+  margin-left: 5px;
+}
+
+.shipping-option small {
+  color: gray;
+}
