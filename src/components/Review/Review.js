@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import fakeData from "../../fakeData";
 import { getDatabaseCart, processOrder, removeFromDatabaseCart } from "../../utilities/databaseManager";
@@ -6,10 +6,11 @@ import Cart from "../Cart/Cart";
 import ReviewItem from "../ReviewItem/ReviewItem";
 import "./Review.css";
 import thankImage from "../../images/giphy.gif";
+import { userContext } from "../../App";
 
 const Review = () => {
   const [cart, setCart] = useState([]);
-  const [orderPlaced, setOrderPlaced] = useState(false);
+  const [orderPlaced, setOrderPlaced] = useContext(userContext);
 
   useEffect(() => {
     const savedCart = getDatabaseCart();
@@ -22,11 +23,7 @@ const Review = () => {
     setCart(cartProducts);
   }, []);
 
-  const handleOrderPlace = () => {
-    setCart([]);
-    setOrderPlaced(true);
-    processOrder();
-  };
+  const handleProceedOrder = () => {};
 
   const handleRemoveCart = (product) => {
     const remainProduct = cart.filter((pd) => product !== pd);
@@ -58,17 +55,15 @@ const Review = () => {
       <div className="cart-container">
         <Cart cart={cart}>
           {cart.length > 0 ? (
-            <Link to="/review">
-              <button onClick={handleOrderPlace} className="button">
-                Place Order
+            <Link to="/shipment">
+              <button onClick={handleProceedOrder} className="button">
+                Proceed Checkout
               </button>
             </Link>
           ) : (
-            <Link to="/review">
-              <button disabled className="button">
-                No order to place
-              </button>
-            </Link>
+            <button disabled className="button">
+              No order to place
+            </button>
           )}
         </Cart>
       </div>

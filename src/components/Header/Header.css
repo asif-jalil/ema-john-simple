@@ -17,12 +17,23 @@
   justify-content: center;
 }
 
-.header nav ul li a {
+.header nav ul li a,
+.header nav ul li button {
   padding: 10px;
   display: block;
   font-size: 20px;
   color: #fff;
 }
+
+.header nav ul li button {
+  background: crimson;
+  color: #fff;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding-top: 15px;
+}
+
 
 .header nav ul li a:hover {
   background: gray;

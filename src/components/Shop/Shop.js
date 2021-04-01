@@ -20,6 +20,7 @@ const Shop = () => {
   useEffect(() => {
     const savedCart = getDatabaseCart();
     const productKeys = Object.keys(savedCart);
+    console.log(productKeys);
     const cartProducts = productKeys.map((existingKey) => {
       const product = fakeData.find((pd) => pd.key === existingKey);
       product.quantity = savedCart[existingKey];
