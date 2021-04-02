@@ -25,6 +25,10 @@
   color: #fff;
 }
 
+.header nav ul li a.active{
+  background: gray;
+}
+
 .header nav ul li button {
   background: crimson;
   color: #fff;

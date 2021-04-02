@@ -2,26 +2,38 @@ import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory } from "react-router";
 import { userContext } from "../../App";
-import { processOrder } from "../../utilities/databaseManager";
+import { getDatabaseCart, processOrder } from "../../utilities/databaseManager";
 import "./Shipment.css";
 
 const Shipment = () => {
-  const [loggedUser, setOrderPlaced] = useContext(userContext);
+  const [loggedUser, setLoggedUser, orderPlaced, setOrderPlaced] = useContext(userContext);
   const history = useHistory();
 
   const { register, handleSubmit, watch, errors } = useForm();
+
   const onSubmit = (data) => {
-    console.log(data);
+    const orderedProduct = getDatabaseCart();
+    const orderDetails = { products: orderedProduct, shippingInfo: data, orderTime: new Date().toString() };
+    fetch("https://ema-john-server-by-asif.herokuapp.com/addOrder", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(orderDetails),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data) {
+          processOrder();
+          setOrderPlaced(true);
+          history.push("/review");
+        }
+      });
+    console.log(orderDetails);
   }; // your form submit function which will invoke after successful validation
 
   // console.log(watch("example")); // you can watch individual input by pass the name of the input
   // console.log(watch("exampleRequired")); // you can watch individual input by pass the name of the input
-
-  function handleOrder() {
-    setOrderPlaced(true);
-    processOrder();
-    history.push("/review");
-  }
 
   return (
     <>
@@ -41,9 +53,7 @@ const Shipment = () => {
         <label>Phone</label>
         <input name="phone" ref={register({ required: true })} />
         {errors.phone && <p>This field is required</p>}
-        <button onClick={handleOrder} type="submit">
-          Place Order
-        </button>
+        <button type="submit">Place Order</button>
       </form>
     </>
   );

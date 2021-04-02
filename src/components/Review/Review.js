@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import fakeData from "../../fakeData";
 import { getDatabaseCart, processOrder, removeFromDatabaseCart } from "../../utilities/databaseManager";
 import Cart from "../Cart/Cart";
 import ReviewItem from "../ReviewItem/ReviewItem";
@@ -10,17 +9,28 @@ import { userContext } from "../../App";
 
 const Review = () => {
   const [cart, setCart] = useState([]);
-  const [orderPlaced, setOrderPlaced] = useContext(userContext);
+  const [loggedUser, setLoggedUser, orderPlaced, setOrderPlaced] = useContext(userContext);
 
   useEffect(() => {
     const savedCart = getDatabaseCart();
     const cartKeys = Object.keys(savedCart);
-    const cartProducts = cartKeys.map((key) => {
-      const product = fakeData.find((pd) => pd.key === key);
-      product.quantity = savedCart[key];
-      return product;
-    });
-    setCart(cartProducts);
+
+    fetch("https://ema-john-server-by-asif.herokuapp.com/productByKeys", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(cartKeys),
+    })
+      .then((res) => res.json())
+      .then((data) => setCart(data));
+
+    // const cartProducts = cartKeys.map((key) => {
+    //   const product = fakeData.find((pd) => pd.key === key);
+    //   product.quantity = savedCart[key];
+    //   return product;
+    // });
+    // setCart(cartProducts);
   }, []);
 
   const handleProceedOrder = () => {};
@@ -39,7 +49,7 @@ const Review = () => {
             <ReviewItem key={pd.key} product={pd} handleRemoveCart={handleRemoveCart}></ReviewItem>
           ))}
         </div>
-      ) : orderPlaced ? (
+      ) : orderPlaced === true ? (
         <div className="product-container">
           <img src={thankImage} alt="" />
         </div>

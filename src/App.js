@@ -20,7 +20,7 @@ function App() {
 
   return (
     <userContext.Provider value={[loggedUser, setLoggedUser, orderPlaced, setOrderPlaced]}>
-      <h3>Email: {loggedUser.email}</h3>
+      <h3>Email: {loggedUser?.email}</h3>
       <Router>
         <Header></Header>
         <Switch>

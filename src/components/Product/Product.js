@@ -8,12 +8,14 @@ const Product = (props) => {
   const { name, img, seller, price, stock, star, features, key } = props.product;
   const stars = [];
   const blankStars = [];
+
   for (let i = 0; i < star; i++) {
-    stars.push(<FontAwesomeIcon icon="star" />);
+    stars.push(<FontAwesomeIcon key={i} icon="star" />);
   }
   for (let i = 0; i < 5 - star; i++) {
-    blankStars.push(<FontAwesomeIcon icon={["far", "star"]} />);
+    blankStars.push(<FontAwesomeIcon key={i} icon={["far", "star"]} />);
   }
+
   return (
     <div className="product-item">
       <div className="product-img">
@@ -46,8 +48,8 @@ const Product = (props) => {
             <div className="feature">
               <h5>Feature</h5>
               <ul className="feature-list">
-                {features.map((feature, keyIndex) => (
-                  <li key={keyIndex}>
+                {features?.map((feature) => (
+                  <li>
                     {feature.description}: {feature.value}
                   </li>
                 ))}

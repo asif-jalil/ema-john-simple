@@ -1,11 +1,11 @@
 import React, { useContext } from "react";
 import "./Header.css";
 import logo from "../../images/logo.png";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { userContext } from "../../App";
 
 const Header = () => {
-  const [loggedUser, setLoggedUser] = useContext(userContext);
+  const [loggedUser, setLoggedUser, orderPlaced, setOrderPlaced] = useContext(userContext);
 
   return (
     <header className="header">
@@ -13,15 +13,15 @@ const Header = () => {
       <nav>
         <ul>
           <li>
-            <Link to="/shop">Shop</Link>
+            <NavLink to="/shop">Shop</NavLink>
           </li>
           <li>
-            <Link to="/review">Review</Link>
+            <NavLink to="/review">Review</NavLink>
           </li>
           <li>
-            <Link to="/inventory">Manage Inventory</Link>
+            <NavLink to="/inventory">Manage Inventory</NavLink>
           </li>
-          <li>{loggedUser && loggedUser.isSignedIn === true ? <button onClick={() => setLoggedUser({})}>Sign Out</button> : <Link to="/login">Login</Link>}</li>
+          <li>{loggedUser && loggedUser.isSignedIn === true ? <button onClick={() => setLoggedUser({})}>Sign Out</button> : <NavLink to="/login">Login</NavLink>}</li>
         </ul>
       </nav>
     </header>

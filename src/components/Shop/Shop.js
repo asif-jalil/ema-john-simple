@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import fakeData from "../../fakeData";
 import Cart from "../Cart/Cart";
 import Product from "../Product/Product";
 import "./Shop.css";
@@ -7,27 +6,52 @@ import "../../utilities/databaseManager";
 import { addToDatabaseCart, getDatabaseCart } from "../../utilities/databaseManager";
 import { Link } from "react-router-dom";
 
+const shuffle = (a) => {
+  for (let i = a.length; i; i--) {
+    let j = Math.floor(Math.random() * i);
+    [a[i - 1], a[j]] = [a[j], a[i - 1]];
+  }
+};
+
 const Shop = () => {
-  // const first10 = fakeData.slice(0, 10);
   const [products, setProducts] = useState([]);
+  const [cart, setCart] = useState([]);
 
   useEffect(() => {
-    setProducts(fakeData.slice(0, 10));
+    fetch("https://ema-john-server-by-asif.herokuapp.com/products")
+      .then((res) => res.json())
+      .then((data) => {
+        setProducts(data);
+      });
   }, []);
 
-  const [cart, setCart] = useState([]);
+  useEffect(() => {
+    shuffle(products);
+  }, [products]);
 
   useEffect(() => {
     const savedCart = getDatabaseCart();
     const productKeys = Object.keys(savedCart);
-    console.log(productKeys);
-    const cartProducts = productKeys.map((existingKey) => {
-      const product = fakeData.find((pd) => pd.key === existingKey);
-      product.quantity = savedCart[existingKey];
-      return product;
-    });
-    setCart(cartProducts);
-  }, []);
+
+    fetch("https://ema-john-server-by-asif.herokuapp.com/productByKeys", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(productKeys),
+    })
+      .then((res) => res.json())
+      .then((data) => setCart(data));
+
+    // if (products.length) {
+    //   const cartProducts = productKeys.map((existingKey) => {
+    //     const product = products.find((pd) => pd.key === existingKey);
+    //     product.quantity = savedCart[existingKey];
+    //     return product;
+    //   });
+    //   setCart(cartProducts);
+    // }
+  }, [products]);
 
   const handleAddProduct = (product) => {
     const sameProduct = cart.find((pd) => pd.key === product.key);
