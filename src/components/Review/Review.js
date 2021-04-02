@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { getDatabaseCart, processOrder, removeFromDatabaseCart } from "../../utilities/databaseManager";
+import { getDatabaseCart, removeFromDatabaseCart } from "../../utilities/databaseManager";
 import Cart from "../Cart/Cart";
 import ReviewItem from "../ReviewItem/ReviewItem";
 import "./Review.css";

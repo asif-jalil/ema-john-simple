@@ -1,11 +1,11 @@
 import React, { useContext } from "react";
 import "./Header.css";
 import logo from "../../images/logo.png";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { userContext } from "../../App";
 
 const Header = () => {
-  const [loggedUser, setLoggedUser, orderPlaced, setOrderPlaced] = useContext(userContext);
+  const [loggedUser, setLoggedUser] = useContext(userContext);
 
   return (
     <header className="header">

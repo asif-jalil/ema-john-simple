@@ -9,7 +9,7 @@ const Shipment = () => {
   const [loggedUser, setLoggedUser, orderPlaced, setOrderPlaced] = useContext(userContext);
   const history = useHistory();
 
-  const { register, handleSubmit, watch, errors } = useForm();
+  const { register, handleSubmit, errors } = useForm();
 
   const onSubmit = (data) => {
     const orderedProduct = getDatabaseCart();
@@ -30,10 +30,7 @@ const Shipment = () => {
         }
       });
     console.log(orderDetails);
-  }; // your form submit function which will invoke after successful validation
-
-  // console.log(watch("example")); // you can watch individual input by pass the name of the input
-  // console.log(watch("exampleRequired")); // you can watch individual input by pass the name of the input
+  };
 
   return (
     <>

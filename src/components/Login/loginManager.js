@@ -20,6 +20,7 @@ export const createUser = (name, email, password) => {
     .catch((error) => {
       var errorMessage = error.message;
       // return errorMessage;
+      console.log(errorMessage);
     });
 };
 
